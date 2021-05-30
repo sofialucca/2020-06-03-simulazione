@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import it.polito.tdp.PremierLeague.model.Action;
+import it.polito.tdp.PremierLeague.model.Adiacenti;
 import it.polito.tdp.PremierLeague.model.Player;
 
 public class PremierLeagueDAO {
@@ -86,5 +87,37 @@ public class PremierLeagueDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public List<Adiacenti> getAdiacenti(Map<Integer,Player> mappa){
+		String sql = "SELECT a1.PlayerID, a2.PlayerID, "
+				+ " (SUM(a1.TimePlayed) -SUM(a2.TimePlayed)) AS delta "
+				+ "FROM actions a1, actions a2 "
+				+ "WHERE a1.MatchID = a2.MatchID AND a1.TeamID != a2.TeamID AND a1.`Starts` = 1 AND a2.`Starts` = 1 "
+				+ "GROUP BY a1.PlayerID, a2.PlayerID "
+				+ "HAVING delta > 0 ";
+		
+		List<Adiacenti> result = new ArrayList<>();
+		
+		Connection conn = DBConnect.getConnection();
+
+		try {
+			PreparedStatement st = conn.prepareStatement(sql);
+			ResultSet res = st.executeQuery();
+			while (res.next()) {
+
+				Player p1 = mappa.get(res.getInt("a1.PlayerID"));
+				Player p2 = mappa.get(res.getInt("a2.PlayerID"));
+				if(p1 != null && p2 != null) {
+					result.add(new Adiacenti(p1,p2, res.getInt("delta")));
+				}
+			}
+			conn.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 }

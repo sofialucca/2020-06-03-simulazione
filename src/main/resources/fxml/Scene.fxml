@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="473.0" prefWidth="428.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polito.tdp.PremierLeague.FXMLController">
+<BorderPane prefHeight="473.0" prefWidth="428.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polito.tdp.PremierLeague.FXMLController">
    <top>
       <Label text="Simulazione d'esame 03/06/2020" BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -39,12 +39,12 @@
                         <Insets right="20.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button fx:id="btnTopPlayer" mnemonicParsing="false" onAction="#doTopPlayer" prefWidth="200.0" text="Top Player" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                  <Button fx:id="btnTopPlayer" disable="true" mnemonicParsing="false" onAction="#doTopPlayer" prefWidth="200.0" text="Top Player" GridPane.columnIndex="2" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets right="20.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button fx:id="btnDreamTeam" mnemonicParsing="false" onAction="#doDreamTeam" prefWidth="200.0" text="Dream Team" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                  <Button fx:id="btnDreamTeam" disable="true" mnemonicParsing="false" onAction="#doDreamTeam" prefWidth="200.0" text="Dream Team" GridPane.columnIndex="2" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets right="20.0" />
                      </GridPane.margin>
@@ -59,11 +59,11 @@
                         <Insets right="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <TextField fx:id="txtK" maxWidth="-Infinity" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="txtK" disable="true" maxWidth="-Infinity" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <TextField fx:id="txtGoals" maxWidth="-Infinity" prefWidth="150.0" GridPane.columnIndex="1" />
                </children>
             </GridPane>
-            <TextArea fx:id="txtResult" prefHeight="354.0" prefWidth="300.0">
+            <TextArea fx:id="txtResult" editable="false" prefHeight="354.0" prefWidth="300.0">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>

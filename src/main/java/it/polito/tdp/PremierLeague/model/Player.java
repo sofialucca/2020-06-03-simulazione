@@ -9,7 +9,7 @@ public class Player {
 		this.playerID = playerID;
 		this.name = name;
 	}
-	
+
 	public Integer getPlayerID() {
 		return playerID;
 	}

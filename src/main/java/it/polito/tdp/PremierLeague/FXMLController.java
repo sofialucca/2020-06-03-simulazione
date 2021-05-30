@@ -8,6 +8,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.PremierLeague.model.Model;
+import it.polito.tdp.PremierLeague.model.Player;
+import it.polito.tdp.PremierLeague.model.PlayerNumero;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -44,10 +46,42 @@ public class FXMLController {
 
     @FXML
     void doCreaGrafo(ActionEvent event) {
-
+    	txtResult.clear();
+    	
+    	if(!isValid()) {
+    		return;
+    	}
+    	
+    	double x = Double.parseDouble(this.txtGoals.getText());
+    	model.creaGrafo(x);
+    	
+    	txtResult.appendText("GRAFO CREATO:\n");
+    	txtResult.appendText("# VERTICI: " + model.getVertexSize());
+    	txtResult.appendText("\n# ARCHI: " + model.getEdgeSize());
+    	
+    	this.btnTopPlayer.setDisable(false);
+    	this.txtK.setDisable(false);
+    	this.btnDreamTeam.setDisable(false);
     }
 
-    @FXML
+    private boolean isValid() {
+		String input = this.txtGoals.getText();
+		boolean check = true;
+		if(input.equals("")) {
+			txtResult.appendText("ERRORE: inserire un valore nel campo x\n");
+			check = false;
+		}else {
+			try {
+				Double.parseDouble(input);
+			}catch(NumberFormatException nfe) {
+				txtResult.appendText("ERRORE: inserire un numero decimale o intero per x\n");
+				check = false;
+			}
+		}
+		return check;
+	}
+
+	@FXML
     void doDreamTeam(ActionEvent event) {
 
     }
@@ -55,6 +89,13 @@ public class FXMLController {
     @FXML
     void doTopPlayer(ActionEvent event) {
 
+    	txtResult.clear();
+    	Player bestP = model.getBestPlayer();
+    	txtResult.appendText("TOP PLAYER: " + bestP.toString() + "\n\n");
+    	txtResult.appendText("AVVERSARI BATTUTI:");
+    	for (PlayerNumero pn : model.getListaBattuti(bestP)) {
+    		txtResult.appendText("\n" + pn.toString());
+    	}
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
