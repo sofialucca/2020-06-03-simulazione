@@ -8,6 +8,8 @@ public class TestModel {
 		m.creaGrafo(0.3);
 		System.out.println(m.getBestPlayer());
 		System.out.println(m.getListaBattuti((m.getBestPlayer())));
+		System.out.println(m.getDreamTeam(3));
+		System.out.println(m.getGradoTitolarita());
 	}
 
 }

@@ -5,6 +5,7 @@
 package it.polito.tdp.PremierLeague;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.PremierLeague.model.Model;
@@ -78,12 +79,43 @@ public class FXMLController {
 				check = false;
 			}
 		}
+		if(!this.btnDreamTeam.isDisabled()) {
+			input = this.txtK.getText();
+			if(input.equals("")) {
+				txtResult.appendText("ERRORE: inserire un valore nel campo x\n");
+				check = false;
+			}else {
+				try {
+					Integer.parseInt(input);
+					
+				}catch(NumberFormatException nfe) {
+					txtResult.appendText("ERRORE: inserire un numero intero per k");
+					check = false;
+				}
+			}
+		}
 		return check;
 	}
 
 	@FXML
     void doDreamTeam(ActionEvent event) {
 
+		txtResult.clear();
+		
+		if(!isValid()) {
+			return;
+		}
+		
+		int k = Integer.parseInt(txtK.getText());
+		List<Player> dreamTeam = model.getDreamTeam(k);
+		
+		txtResult.appendText("DREAMTEAM DI " + k + " GIOCATORI");
+		txtResult.appendText("\n\nGRADO TITOLARITA' = " + model.getGradoTitolarita());
+		txtResult.appendText("\n\nGIOCATORI:");
+		
+		for(Player p : dreamTeam) {
+			txtResult.appendText("\n" + p.toString());
+		}
     }
 
     @FXML
