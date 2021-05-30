@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import it.polito.tdp.PremierLeague.model.Action;
 import it.polito.tdp.PremierLeague.model.Player;
@@ -57,6 +58,33 @@ public class PremierLeagueDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
+		}
+	}
+	
+	public void setGiocatori(Map<Integer,Player> mappa, double x) {
+		String sql = "SELECT p.PlayerID, Name "
+				+ "FROM players p, actions a "
+				+ "WHERE p.PlayerID = a.PlayerID "
+				+ "GROUP BY p.PlayerID "
+				+ "HAVING AVG(Goals) > ?";
+		
+		Connection conn = DBConnect.getConnection();
+
+		try {
+			PreparedStatement st = conn.prepareStatement(sql);
+			st.setDouble(1, x);
+			ResultSet res = st.executeQuery();
+			while (res.next()) {
+
+				Player player = new Player(res.getInt("PlayerID"), res.getString("Name"));
+				if(!mappa.containsKey(player.getPlayerID())) {
+					mappa.put(player.getPlayerID(), player);
+				}
+			}
+			conn.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
 }
